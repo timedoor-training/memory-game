@@ -61,7 +61,6 @@ export default class MemoryGameScene extends Phaser.Scene {
                 return
             }
             child.setDepth(child.y)
-            child.setDepth(child.y)
         })
 
         this.updateActiveBox()
@@ -229,6 +228,29 @@ export default class MemoryGameScene extends Phaser.Scene {
                 item.setTexture('penguin')
                 break
         }
+
+        // if (itemType == 0) {
+        //     item = this.itemsGroup.get(box.x, box.y)
+        //     item.setTexture('bear')
+        // } else if (itemType == 1) {
+        //     item = this.itemsGroup.get(box.x, box.y)
+        //     item.setTexture('chicken')
+
+        // } else if (itemType == 2) {
+        //     item = this.itemsGroup.get(box.x, box.y)
+        //     item.setTexture('duck')
+
+        // } else if (itemType == 3) {
+        //     item = this.itemsGroup.get(box.x, box.y)
+        //     item.setTexture('parrot')
+
+        // } else if (itemType == 4) {
+        //     item = this.itemsGroup.get(box.x, box.y)
+        //     item.setTexture('penguin')
+        // }
+
+
+
         if (!item) {
             return
         }
