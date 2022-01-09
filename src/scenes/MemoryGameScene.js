@@ -24,6 +24,10 @@ export default class MemoryGameScene extends Phaser.Scene {
         this.selectedBoxes = []
 
         this.matchesCount = 0
+
+        this.timerLabel = undefined
+        this.countdownTimer = 40
+        this.timedEvent = undefined
     }
 
     preload() {
@@ -48,6 +52,15 @@ export default class MemoryGameScene extends Phaser.Scene {
         this.physics.add.collider(this.player, this.boxGroup, this.handlePlayerBoxCollide, undefined, this)
         this.itemsGroup = this.add.group()
 
+        this.add.text(this.halfHeight, 16, null)
+
+        this.timedEvent = this.time.addEvent({
+            delay: 1000,
+            callback: this.gameOver,
+            callbackScope: this,
+            loop: true
+        })
+
     }
 
     update() {
@@ -64,6 +77,15 @@ export default class MemoryGameScene extends Phaser.Scene {
         })
 
         this.updateActiveBox()
+
+        // this.timerLabel.setStyle({})
+
+        // this.timerLabel.setStyle({
+        //     fontSize: '24px',
+        //     fill: '#ffffff',
+        //     fontStyle: 'bold',
+        //     align: 'center'
+        // }).setText(this.countdownTimer)
     }
 
     createBoxes() {
@@ -229,6 +251,9 @@ export default class MemoryGameScene extends Phaser.Scene {
                 break
         }
 
+        // I explain to the students that we also can use if statement instead of switch case
+        // But again switch case has its own specialties that's why in this case we use use case....just in case, lol thats rhyme :D
+
         // if (itemType == 0) {
         //     item = this.itemsGroup.get(box.x, box.y)
         //     item.setTexture('bear')
@@ -332,7 +357,25 @@ export default class MemoryGameScene extends Phaser.Scene {
             if (this.matchesCount >= 4) {
                 this.player.active = false
                 this.player.setVelocity(0, 0)
+                this.add.text(this.halfWidth, this.halfHeight +
+                    250, 'You Win!', { fontSize: 60 })
+                    .setOrigin(0.5)
+                this.countdownTimer = undefined
             }
         })
     }
+
+    gameOver() {
+        this.countdownTimer -= 1
+        if (this.countdownTimer == 0) {
+            this.add.text(this.halfWidth, this.halfHeight +
+                250, 'You Lose!', { fontSize: 60 })
+                .setOrigin(0.5)
+            this.countdownTimer = undefined
+            this.player.active = false
+            this.player.setVelocity(0, 0)
+        }
+    }
+
+
 }
